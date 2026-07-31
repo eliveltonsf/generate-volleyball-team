@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gerador de Times de Volei</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-shape bg-shape-1" aria-hidden="true"></div>
+    <div class="bg-shape bg-shape-2" aria-hidden="true"></div>
+
+    <header class="hero">
+      <p class="eyebrow">Gerar times de Vólei</p>
+      <h1>
+        Vôleizin da PAZ       
+        <span class="hl">Os mais abençoados</span>
+      </h1>
+      <p>
+        Cole a lista no formato <strong>Nome - F/M - INI/INT/PRO</strong> e gere times
+        equilibrados com explicacao de cada escolha e capitao de cada equipe.
+      </p>
+    </header>
+
+    <section class="workflow card" aria-labelledby="comoFuncionaTitulo">
+      <div class="workflow-head">
+        <h2 id="comoFuncionaTitulo">Como funciona?</h2>
+      </div>
+
+      <div class="workflow-grid">
+        <article class="flow-step">
+          <div class="step-index">1</div>
+          <div class="step-content">
+            <h3>Entrada</h3>
+            <p>Cole a lista de jogadores com nome, genero e nivel.</p>
+            <div class="chip-row">
+              <span class="chip">Texto livre</span>
+              <span class="chip">Formato simples</span>
+              <span class="chip">Validacao por linha</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="flow-step">
+          <div class="step-index">2</div>
+          <div class="step-content">
+            <h3>Balanceamento</h3>
+            <p>O sistema distribui jogadores para manter equilibrio tecnico.</p>
+            <div class="icon-band" aria-hidden="true">
+              <span class="icon-dot">F</span>
+              <span class="icon-link"></span>
+              <span class="icon-dot">INT</span>
+              <span class="icon-link"></span>
+              <span class="icon-dot">PRO</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="flow-step">
+          <div class="step-index">3</div>
+          <div class="step-content">
+            <h3>Resultado</h3>
+            <p>Veja times, capitao, avisos de excecao e banco de reserva.</p>
+            <div class="chip-row">
+              <span class="chip">Times de 4</span>
+              <span class="chip">Capitao automatico</span>
+              <span class="chip">Explicacao completa</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <main class="app-shell">
+      <section class="card input-card" aria-labelledby="entradaTitulo">
+        <div class="card-header">
+          <h2 id="entradaTitulo">Entrada de Jogadores</h2>
+          <p>Uma pessoa por linha. Linhas extras (titulo, emoji, observacao) sao ignoradas automaticamente.</p>
+        </div>
+
+        <label for="playersInput" class="sr-only">Lista de jogadores</label>
+        <textarea
+          id="playersInput"
+          spellcheck="false"
+          placeholder="Mari - F - PRO&#10;Carol - F - INT&#10;Mel - F - INI&#10;Gabigol - M - PRO"
+        ></textarea>
+
+        <div class="actions">
+          <button id="generateBtn" class="btn btn-primary" type="button">Gerar Times</button>
+          <button id="clearBtn" class="btn btn-secondary" type="button">Limpar</button>
+        </div>
+
+        <div id="feedback" class="feedback" role="status" aria-live="polite"></div>
+      </section>
+
+      <section class="card output-card" aria-labelledby="resultadoTitulo">
+        <div class="card-header">
+          <h2 id="resultadoTitulo">Resultado</h2>
+          <p>Times com distribuicao de nivel, capitao, reservas e avisos.</p>
+          <div class="output-actions">
+            <button id="copyResultBtn" class="btn btn-secondary" type="button" disabled>
+              Copiar para WhatsApp
+            </button>
+            <span id="copyFeedback" class="copy-feedback" role="status" aria-live="polite"></span>
+          </div>
+        </div>
+
+        <div id="summary" class="summary"></div>
+        <div id="warnings" class="warnings"></div>
+        <div id="teamsGrid" class="teams-grid"></div>
+        <div id="reserves" class="reserves"></div>
+      </section>
+    </main>
+
+    <div id="loadingOverlay" class="loading-overlay hidden" aria-hidden="true">
+      <div class="loading-card" role="status" aria-live="assertive">
+        <p class="loading-title">Gerando os Times...</p>
+        <div class="court">
+          <div class="net"></div>
+          <div class="ball"></div>
+        </div>
+        <p class="loading-text">Analisando nivel, genero e equilibrio geral.</p>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
