@@ -160,6 +160,11 @@ function parsePlayers(rawText) {
     );
 
     if (!match) {
+      if (isLikelyMetadataLine(normalizedLine)) {
+        ignoredCount += 1;
+        return;
+      }
+
       if (looksLikePlayerLine(normalizedLine)) {
         errors.push(
           `Linha ${lineNumber}: formato invalido. Use "Nome - F/M - INI/INT/PRO".`,
@@ -200,19 +205,51 @@ function normalizeInputLine(line) {
 }
 
 function looksLikePlayerLine(line) {
-  const hasThreeBlocks = line.split("-").length >= 3;
-  const hasGenderOrLevelHint = /\b([mMfF]|INI|INT|PRO)\b/i.test(line);
-  return hasThreeBlocks || hasGenderOrLevelHint;
+  const hasGenderBlock = /-\s*[mMfF]\s*-/i.test(line);
+  const hasLevelBlock = /-\s*(INI|INT|PRO)\b/i.test(line);
+  return hasGenderBlock || hasLevelBlock;
 }
 
 function isReservesHeading(line) {
-  return /^(suplentes?|reservas?)\b[:\s-]*/i.test(line);
+  return /^(suplentes?|reservas?|lista\s+de\s+espera)\b[:\s-]*/i.test(line);
 }
 
 function isNonReserveSectionLine(line) {
-  return /^(dia do racha|hor[aá]rio|local|quadra|obs|pix|valor|pagamento|🚨|\*pix\*|\*valor)/i.test(
+  return /^(dia do racha|hor[aá]rio|local|quadra|obs|pix|valor|pagamento|faz\s+o\s+pix|garante\s+a\s+vaga|🗓️|⏰|🏐|💰|🚨|\*pix\*|\*valor)/i.test(
     line,
   );
+}
+
+function isLikelyMetadataLine(line) {
+  if (!line) {
+    return true;
+  }
+
+  if (/^[_=]{3,}$/.test(line)) {
+    return true;
+  }
+
+  if (
+    /^(listinha|arena|av\.?|domingo|segunda|ter[cç]a|quarta|quinta|sexta|s[aá]bado|pix|nubank|itau|caixa)\b/i.test(
+      line,
+    )
+  ) {
+    return true;
+  }
+
+  if (/^\d{1,2}\/?\d{1,2}\/?\d{2,4}\b/.test(line)) {
+    return true;
+  }
+
+  if (/\b\d{1,2}:\d{2}\b/.test(line)) {
+    return true;
+  }
+
+  if (/\$\s*\d+/.test(line)) {
+    return true;
+  }
+
+  return false;
 }
 
 function extractReserveName(line) {
