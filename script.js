@@ -22,21 +22,6 @@ const copyFeedback = document.getElementById("copyFeedback");
 
 let lastGeneratedPayload = null;
 
-const SAMPLE_PLAYERS = `Mari - F - PRO
-Carol - F - INT
-Mel - F - INI
-Gabigol - M - PRO
-Andreia - F - INI
-Hemerso - M - PRO
-Adriano - M - INI
-Elivelton - M - PRO
-Marcos - M - INT
-Jeferson - M - PRO
-Narcelio - M - INT
-Artemia - F - INT`;
-
-playersInput.value = SAMPLE_PLAYERS;
-
 generateBtn.addEventListener("click", async () => {
   clearResultArea();
 
